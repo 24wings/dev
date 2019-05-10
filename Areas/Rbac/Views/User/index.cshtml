@@ -1,0 +1,27 @@
+@model app.Models.User;
+@(Html.DevExtreme<User>().DataGrid()
+    .DataSource(d => d.WebApi()
+        .Controller("UserApi") 
+        .LoadAction("loadUsers")
+        .InsertAction("InsertOrder")
+        .UpdateAction("UpdateOrder")
+        .DeleteAction("DeleteOrder" )
+        .Key("id")
+    )
+    .Columns(cols=>{
+        cols.Add().DataField(nameof(Model.userName)).Caption("用户名");
+         cols.Add().DataField(nameof(Model.createTime)).Caption("创建时间");
+    })
+    .RemoteOperations(true)
+ 
+    .FilterRow(f => f.Visible(true))
+    .HeaderFilter(f => f.Visible(true))
+    .GroupPanel(p => p.Visible(true))
+    .Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+    .Height(600)
+    .ShowBorders(true)
+    
+    .Editing(e => e.AllowAdding(true).AllowDeleting(true).AllowUpdating(true))
+    .Grouping(g => g.AutoExpandAll(false))
+   
+)
